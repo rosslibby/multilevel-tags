@@ -110,7 +110,7 @@
         }
 
         document.onkeydown = e => {
-            if (e.which === 9) {
+            if (e.which === 9 && e.target.value.trim() !== '') {
                 e.preventDefault()
 
                 document.getElementById('type').innerText = e.target.value
@@ -121,7 +121,7 @@
         }
 
         document.querySelector('#lol').onkeypress = e => {
-            if (e.which === 44 || e.which === 13) {
+            if ((e.which === 44 || e.which === 13) && e.target.value.trim() !== '') {
                 tags.push(e.target.value.trim())
             }
         }
