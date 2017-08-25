@@ -43,7 +43,7 @@
 
         .wrapper {
             border-radius: 4px;
-            box-shadow: 0 0 1px 1px rgba(96, 96, 96, .1);
+            box-shadow: 0 0 3px 1px rgba(96, 96, 96, .2);
             cursor: pointer;
             margin: 0 3px;
         }
@@ -56,7 +56,6 @@
         .kill {
             background-color: #fff;
             border-radius: 4px;
-            border: 1px solid rgba(0, 0, 0, .2);
             display: inline-flex;
             font-family: sans-serif;
             font-size: 13px;
@@ -119,18 +118,16 @@
                 e.target.value = null
                 document.getElementById('lol').className += ' input--typed'
             }
-
-            console.log(e.which)
         }
 
         document.querySelector('#lol').onkeypress = e => {
-            if (e.which === 44) {
+            if (e.which === 44 || e.which === 13) {
                 tags.push(e.target.value.trim())
             }
         }
 
         document.querySelector('#lol').onkeyup = e => {
-            if (e.which === 188) {
+            if (e.which === 188 || e.which === 13) {
                 e.target.value = null
 
                 renderTags(tags)
