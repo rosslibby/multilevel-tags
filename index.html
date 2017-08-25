@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>tagging</title>
+    <style>
+        .type {
+            background-color: #eee;
+            border-radius: 4px;
+            border-right: 1px solid rgba(96, 96, 96, .1);
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            display: inline-flex;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 7px 8px 8px;
+        }
+
+        .input {
+            background-color: #eee;
+            border: none;
+            border-radius: 4px;
+            margin-top: 1px;
+            margin-left: -4px;
+            padding: 8px;
+            vertical-align: bottom;
+        }
+
+        .input--typed {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            border-left: 1px solid rgba(255, 255, 255, .4);
+        }
+
+        .input:focus {
+            outline: 0;
+        }
+
+        #data {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .wrapper {
+            border-radius: 4px;
+            box-shadow: 0 0 1px 1px rgba(96, 96, 96, .1);
+            cursor: pointer;
+            margin: 0 3px;
+        }
+
+        .wrapper:hover > span {
+            background-color: #fafafa;
+        }
+
+        .tag,
+        .kill {
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, .2);
+            display: inline-flex;
+            font-family: sans-serif;
+            font-size: 13px;
+            padding: 6px;
+        }
+
+        .tag {
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            border-left: none;
+        }
+
+        .kill {
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            border-right: 1px solid rgba(0, 0, 0, .1);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="type"></div>
+        <input class="input" id="lol" name="lol" />
+        <div id="data"></div>
+    </div>
+    <script>
+        const tags = []
+
+        const renderTags = (tags) => {
+            let data = document.getElementById('data')
+            data.innerHTML = null
+
+            tags.forEach((tag, i) => {
+                let wrapper = document.createElement('span')
+                wrapper.className = 'wrapper'
+                let el = document.createElement('span')
+                el.innerText = tag
+                el.className = 'tag'
+                let kill = document.createElement('span')
+                kill.setAttribute('index', i)
+                kill.className = 'kill'
+                kill.appendChild(document.createTextNode('x'))
+                kill.addEventListener('click', e => {
+                    tags.splice(i, 1)
+                    renderTags(tags)
+                })
+
+                wrapper.appendChild(kill)
+                wrapper.appendChild(el)
+                data.appendChild(wrapper)
+            })
+        }
+
+        document.onkeydown = e => {
+            if (e.which === 9) {
+                e.preventDefault()
+
+                document.getElementById('type').innerText = e.target.value
+                document.getElementById('type').className = 'type'
+                e.target.value = null
+                document.getElementById('lol').className += ' input--typed'
+            }
+
+            console.log(e.which)
+        }
+
+        document.querySelector('#lol').onkeypress = e => {
+            if (e.which === 44) {
+                tags.push(e.target.value.trim())
+            }
+        }
+
+        document.querySelector('#lol').onkeyup = e => {
+            if (e.which === 188) {
+                e.target.value = null
+
+                renderTags(tags)
+            }
+        }
+    </script>
+</body>
+</html>
